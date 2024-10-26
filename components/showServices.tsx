@@ -6,12 +6,13 @@ import CellAction from "./cellAction";
 
 const ShowServices: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false); // added last
+  const [key] = useState(0);
 
   const { services, fetchServices } = useServiceStore();
   useEffect(() => {
     fetchServices();
     setIsMounted(true); //added last
-  }, [fetchServices]);
+  }, [fetchServices, key]);
 
   if (!isMounted) {
     //added last
@@ -24,32 +25,31 @@ const ShowServices: React.FC = () => {
       </h2>
       {services.length > 0 ? (
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {services
-            // .slice()
-            // .reverse()
-            .map((service) => (
-              <li
-                key={service.serviceId}
-                className="service-item p-4 bg-white rounded-lg shadow-md relative"
+          {services.map((service) => (
+            <li
+              key={service.serviceId}
+              className="service-item p-4 bg-white rounded-lg shadow-md relative"
+            >
+              <CellAction className="absolute right-3" data={service} />
+              <h3 className="sm:text-lg text-base font-semibold">
+                {service.name}
+              </h3>
+              <p className="text-gray-600 sm:text-base text-sm">
+                {service.description}
+              </p>
+              <p className="text-gray-800 sm:text-lg text-sm font-bold">
+                Cena: {service.price} zł.
+              </p>
+              <p className="text-gray-600">Time: {service.time}</p>
+              <p
+                className={`${
+                  service.active ? "text-green-600" : "text-red-600"
+                } font-bold`}
               >
-                <CellAction className="absolute right-3" />
-                <h3 className="sm:text-xl text-sm font-semibold">
-                  {service.name}
-                </h3>
-                <p className="text-gray-600">{service.description}</p>
-                <p className="text-gray-800 font-bold">
-                  Cena: {service.price} zł.
-                </p>
-                <p className="text-gray-600">Time: {service.time}</p>
-                <p
-                  className={`${
-                    service.active ? "text-green-600" : "text-red-600"
-                  } font-bold`}
-                >
-                  {service.active ? "Active" : "Inactive"}
-                </p>
-              </li>
-            ))}
+                {service.active ? "Active" : "Inactive"}
+              </p>
+            </li>
+          ))}
         </ul>
       ) : (
         <p>No services available.</p>

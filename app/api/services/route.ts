@@ -121,7 +121,7 @@ export async function DELETE(
     });
     return NextResponse.json(service);
   } catch (error) {
-    console.log("[Błąd przy kasowaniu usługi", error);
+    console.log("[Błąd przy usunięciu usługi", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
