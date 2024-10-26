@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Services {
+  serviceId   String    @id @default(uuid())
+  name        String    @db.Text
+  description String    @db.Text
+  price       Float     @db.Float
+  time        String    @db.Text
+  active      Boolean?  @default(false)
+  createdAt   DateTime? @default(now()) @db.DateTime(0)
+}
