@@ -14,6 +14,7 @@ interface ServiceStore {
   fetchServices: () => Promise<void>;
   addService: (newService: ServiceProps) => Promise<void>;
   deleteService: (serviceId: string) => Promise<void>; // Добавлено
+  updateService: (updatedService: ServiceProps) => Promise<void>; // Добавлено
 }
 
 const fetchServices = async (
@@ -54,6 +55,20 @@ const useServiceStore = create<ServiceStore>((set) => ({
     } catch (error) {
       console.error("Error deleting service:", error);
     }
+  },
+  updateService: async (updatedService) => {
+    await fetch(`/api/services/${updatedService.serviceId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedService),
+    });
+    set((state) => ({
+      services: state.services.map((service) =>
+        service.serviceId === updatedService.serviceId
+          ? updatedService
+          : service
+      ),
+    }));
   },
 }));
 

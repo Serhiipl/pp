@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-
 import { Modal } from "../ui/Modal";
 
 interface AlertModalProps {
@@ -31,15 +30,25 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   return (
     <Modal
       title="Jesteś pewna?"
-      description="Usunięcie nie odwrotne"
+      description="Usunięcie nie odwrotne =)"
       isOpen={isOpen}
       onClose={onClose}
     >
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-        <Button disabled={loading} variant="outline" onClick={onClose}>
+        <Button
+          className="font-bold"
+          disabled={loading}
+          variant="outline"
+          onClick={onClose}
+        >
           NIE
         </Button>
-        <Button disabled={loading} variant="destructive" onClick={onConfirm}>
+        <Button
+          className="bg-red-400 text-white font-bold"
+          disabled={loading}
+          variant="outline"
+          onClick={onConfirm}
+        >
           Usuń usługe!
         </Button>
       </div>

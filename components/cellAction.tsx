@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState } from "react";
 import useServiceStore, { ServiceProps } from "@/store/serviceStore";
@@ -16,6 +15,7 @@ import {
 import { AlertModal } from "./modals/alertModal";
 // import useServiceStore from "@/store/serviceStore"; // Импортируем store
 import toast from "react-hot-toast";
+import { ServiceChangeModal } from "./modals/serviceModal";
 
 interface CellActionProps {
   className?: string;
@@ -25,6 +25,7 @@ interface CellActionProps {
 const CellAction: React.FC<CellActionProps> = ({ className, data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false); // Для управления редактирования
   const deleteService = useServiceStore((state) => state.deleteService);
 
   const handleDelete = async () => {
@@ -48,6 +49,12 @@ const CellAction: React.FC<CellActionProps> = ({ className, data }) => {
         onConfirm={handleDelete}
         loading={loading}
       />
+      <ServiceChangeModal
+        isOpen={editOpen}
+        onClose={() => setEditOpen(false)}
+        serviceData={data}
+      />
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="w-8 h-8 p-0">
@@ -58,7 +65,7 @@ const CellAction: React.FC<CellActionProps> = ({ className, data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Opcje</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setEditOpen(true)}>
             <LucideEdit3 className="mr-2 h-4 w-4" />
             Edycja usługi...
           </DropdownMenuItem>
