@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 // import { Toaster } from "@/components/ui/toaster";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import Header from "../components/header";
 import "./globals.css";
 
