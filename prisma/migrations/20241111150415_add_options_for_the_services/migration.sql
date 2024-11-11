@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Services` ADD COLUMN `options` ENUM('BROWS', 'LASHES', 'PERMANENT', 'BROWS_AND_LASHES', 'ADDONS') NULL;
