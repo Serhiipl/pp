@@ -11,7 +11,7 @@ const MainNav = () => {
         </li>
         <li>
           <Link className="text-black hover:text-blue-500" href="/addservice">
-            Add Service
+            Dashboard
           </Link>
         </li>
       </ul>

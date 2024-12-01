@@ -2,7 +2,7 @@ import Main from "@/components/main";
 
 export default function Home() {
   return (
-    <div className=" bg-white">
+    <div className="flex items-center justify-center h-full bg-white">
       <Main />
     </div>
   );
