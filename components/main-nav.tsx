@@ -1,6 +1,8 @@
+import { auth } from "@/auth";
 import Link from "next/link";
 
-const MainNav = () => {
+const MainNav = async () => {
+  const session = await auth();
   return (
     <nav>
       <ul className="flex space-x-4">
@@ -9,11 +11,13 @@ const MainNav = () => {
             PostsPage
           </Link>
         </li>
-        <li>
-          <Link className="text-black hover:text-blue-500" href="/addservice">
-            Dashboard
-          </Link>
-        </li>
+        {session?.user && (
+          <li>
+            <Link className="text-black hover:text-blue-500" href="/addservice">
+              Dashboard
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );

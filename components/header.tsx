@@ -1,8 +1,12 @@
 import Link from "next/link";
 import Container from "./ui/container";
 import MainNav from "./main-nav";
+import { auth } from "@/auth";
+import Image from "next/image";
+import Logout from "./logout";
 
-const Header = () => {
+const Header = async () => {
+  const session = await auth();
   return (
     <div className="w-full bg-slate-200">
       <Container>
@@ -12,11 +16,27 @@ const Header = () => {
           </Link>
           <MainNav />
           <div className="flex items-center gap-x-5">
-            <Link href={"/sign-in"}>
-              <div className="bg-indigo-600 text-white px-4 py-2 rounded-md">
-                Sign-In
+            {!session?.user ? (
+              <div className="bg-red-200 text-white px-4 py-2 rounded-lg">
+                <Link href={"/sign-in"}>Sign-In</Link>
               </div>
-            </Link>
+            ) : (
+              <>
+                <div className="flex items-center gap-x-2 text-sm">
+                  {session.user.name}
+                  {session.user.image && (
+                    <Image
+                      src={session.user.image}
+                      alt="User Avatar"
+                      width={30}
+                      height={30}
+                      className="rounded-full"
+                    />
+                  )}
+                </div>
+                <Logout />
+              </>
+            )}
           </div>
         </div>
       </Container>

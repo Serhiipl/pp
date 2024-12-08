@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import prismadb from "@/lib/db";
+import { auth } from "@/auth";
 
 export async function POST(request: Request) {
   try {
+    const userId = await auth();
     const body = await request.json();
     const { name, description, price, time, active } = body;
-    // na przyszłość kiedy dodam autoryzacje
 
-    //  const { userId } = auth();
-    //  if (!userId) {
-    //    return new NextResponse("Unauthenticated", { status: 401 });
-    //  }
+    if (!userId?.user) {
+      return new NextResponse("Unauthenticated", { status: 401 });
+    }
 
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });
@@ -66,15 +66,15 @@ export async function PATCH(
   { params }: { params: { serviceId: string } }
 ) {
   try {
+    const userId = await auth();
     const body = await request.json();
     const { name, description, price, time, active } = body;
 
     // na przyszłość kiedy dodam autoryzacje
 
-    //  const { userId } = auth();
-    //  if (!userId) {
-    //    return new NextResponse("Unauthenticated", { status: 401 });
-    //  }
+    if (!userId?.user) {
+      return new NextResponse("Unauthenticated", { status: 401 });
+    }
 
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });
